@@ -278,6 +278,7 @@ public class TransformingClassLoader extends ClassLoader implements ITransformin
                 return new AbstractMap.SimpleImmutableEntry<>(processedClassBytes, codeSource);
             } else {
                 LOGGER.trace(CLASSLOADING, "Failed to transform target {} from {}", name, classResource);
+                ((TransformerAuditTrail) Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.AUDITTRAIL.get()).get()).clearReason(name);
                 // signal to the parent to fall back to the normal lookup
                 throw new ClassNotFoundException();
             }
